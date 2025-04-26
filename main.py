@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from typing import List
 
 app = FastAPI(
     title='FastApi FitCoding!!!',
@@ -10,13 +12,41 @@ app = FastAPI(
     }
 )
 
+songs = [
+    {
+        "id": 1,
+        "title": "Bohemian Rhapsody",
+        "artist": "Queen",
+        "year": 1975,
+        "genre": "Rock",
+        "duration": "5:55"
+    },
+    {
+        "id": 2,
+        "title": "Shape of You",
+        "artist": "ed Sheeran",
+        "year": 2017,
+        "genre": "Pop",
+        "duration": "3:53"
+    }
+]
 
 @app.get(
-    "/" , 
+    "/",
     tags=['Home'],
-    summary='Endpoint de bienvenida',
-    description='Retorna una salida personalizada',
-    response_description='Mensaje de bienvenida en texto plano'
+    summary='Welcome Endpoint',
+    description='Returns a personalized welcome message.',
+    response_description='Welcome message in HTML format.'
 )
 def home():
- return "Hello world!!"
+    return HTMLResponse("<h1>Hello world!!</h1>")
+
+@app.get(
+    "/songs",
+    tags=['Songs'],
+    summary='Get all songs.',
+    description='Returns a list of all available songs.',
+    response_description='List of songs in JSON format.'
+)
+def get_songs() -> List[dict]:
+    return songs
