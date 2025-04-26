@@ -1,0 +1,9 @@
+services:
+  python:
+    image: python-fastapi:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile 
+    container_name: python_fastapi
+    volumes:
+      - .:/app
