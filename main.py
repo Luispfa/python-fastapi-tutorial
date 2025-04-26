@@ -1,6 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
-from typing import List
+from typing import List, Optional
 
 app = FastAPI(
     title='FastApi FitCoding!!!',
@@ -50,3 +50,17 @@ def home():
 )
 def get_songs() -> List[dict]:
     return songs
+
+@app.get(
+    "/songs/{id}",
+    tags=['Songs'],
+    summary='Get song by ID.',
+    description='Returns a specific song based on its ID.',
+    response_description='Details of the song in JSON format. Returns a 404 error.'
+)
+def get_song(id: int) -> Optional[dict]:
+    for song in songs:
+        if song['id'] == id:
+            return song
+        
+    raise HTTPException(status_code=404, detail='Song not found.')
