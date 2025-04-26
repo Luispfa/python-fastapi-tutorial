@@ -7,3 +7,10 @@ services:
     container_name: python_fastapi
     volumes:
       - .:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - python_network
+
+networks:
+  python_network:
