@@ -64,3 +64,17 @@ def get_song(id: int) -> Optional[dict]:
             return song
         
     raise HTTPException(status_code=404, detail='Song not found.')
+
+@app.get(
+    "/songs/",
+    tags=['Songs'],
+    summary='Get song by genre and year.',
+    description='Returns a song that matches the specified gender and year.',
+    response_description='Details of the song in JSON format. Returns a 404 error.'
+)
+def get_song_by_genre(genre: str, year: int):
+    for song in songs:
+        if song['genre'] == genre:
+            return song
+        
+    raise HTTPException(status_code=404, detail='Song not found.')
